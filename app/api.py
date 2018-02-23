@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from krakenio import Client
 import json
 import urllib3
+from app import telegram as telegramApi
+from random import randint
 
 def main(request):
 	data = request.POST
@@ -20,7 +22,11 @@ def main(request):
 			compressed_filename = filename.split('.')[0] + '.png'
 			path_to_final_img = download_image(image_url, compressed_filename)
 
-			response = {"success": True, "path_to_final_img": path_to_final_img}
+			stickerpack_name = str(randint(0, 100))
+
+			telegram = telegramApi.Telegram()
+			path_stickerpack = telegram.createStikerpack(path_to_final_img, stickerpack_name)
+			response = {"success": True, "path_stickerpack": path_stickerpack}
 		else:
 			response = {"success": False}
 	else:
