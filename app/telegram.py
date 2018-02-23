@@ -9,7 +9,7 @@ class Telegram:
 		base_url = 'https://t.me/addstickers/'
 		# change uid on another user(hpmd dev dev)
 		uid = 191346331
-		name = name = stickerpack_name + 'by_HPMDBOT'
+		name = stickerpack_name + '_by_HPMDBOT'
 		title = 'test sticker try3'
 
 		with open(path_to_img, 'rb') as f:
