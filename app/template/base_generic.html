@@ -1,0 +1,69 @@
+{% load staticfiles %}
+<html >
+    <head>
+        <title>hpmd 8 march</title>
+        {% load static %}
+        {{ static }}
+        {{ staticfiles }}
+    </head>
+    <body class="body-root">
+        <header>
+
+        </header>
+
+        {% block content %}
+        {% endblock %}
+
+    </body>
+    <script>
+        var getCookie = function(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = (cookies[i]).trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        };
+
+        var giveme= {
+            sticker: function () {
+                var data = {
+                    action: 'givemesticker'
+                };
+
+                var boundary = String(Math.random()).slice(2);
+                var boundaryMiddle = '--' + boundary + '\r\n';
+                var boundaryLast = '--' + boundary + '--\r\n'
+
+                var body = ['\r\n'];
+                for (var key in data) {
+                    // добавление поля
+                    body.push('Content-Disposition: form-data; name="' + key + '"\r\n\r\n' + data[key] + '\r\n');
+                }
+
+                body = body.join(boundaryMiddle) + boundaryLast;
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/givemesticker/', true);
+
+                var csrftoken = getCookie('csrftoken');
+                xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+                xhr.setRequestHeader('Content-Type', 'multipart/form-data; text=' + '123');
+
+                xhr.onreadystatechange = function () {
+                    if (this.readyState != 4) return;
+
+                    console.log(this.responseText);
+                }
+
+                xhr.send(body);
+            }
+        }
+    </script>
+</html>
