@@ -1,9 +1,9 @@
-from django.conf import settings
-from django.shortcuts import render, redirect
+from django.shortcuts import render
+from app.lib.models import Stickerpack
 
 def index(request):
-    print()
     args = {
         'test': 'tese',
     }
+
     return render(request, 'index.html', args)
