@@ -5,16 +5,13 @@
     <button type="button" onclick="giveme.sticker()">ABC</button>
 
     <form enctype="multipart/form-data" method="post" name="fileinfo" action="/givemesticker/">
-        {% csrf_token %}
-      <label>Your email address:</label>
-      <input type="email" autocomplete="on" autofocus name="userid" placeholder="email" required size="32" maxlength="64" /><br />
-      <label>Custom file label:</label>
-      <input type="text" name="filelabel" size="12" maxlength="32" /><br />
-      <label>File to stash:</label>
+      {% csrf_token %}
       <input type="file" name="file" required />
       <input type="hidden" name="action" value="givemesticker">
       <input type="submit" value="Stash the file!" />
     </form>
-{#        <input type="file" name="avc">#}
-    <img src="{% static "img/t.png" %}">
+
+    {% if image_url %}
+        <img src="{{ image_url }}">
+    {% endif %}
 {% endblock %}
