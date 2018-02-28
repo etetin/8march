@@ -42,7 +42,7 @@ def main(request):
 
 			response = {
 				"success": True,
-				"url": image_handler.getPathToImage()
+				"url": image_handler.getUrlToImage()
 			}
 
 		else:

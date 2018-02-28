@@ -4,11 +4,17 @@
 {% load static %}
     <button type="button" onclick="giveme.sticker()">ABC</button>
 
-    <form enctype="multipart/form-data" method="post" name="fileinfo" action="/givemesticker/">
+    <form enctype="multipart/form-data" method="post" name="fileinfo" action="/api/">
       {% csrf_token %}
       <input type="file" name="file" required />
       <input type="hidden" name="action" value="givemesticker">
-      <input type="submit" value="Stash the file!" />
+      <input type="submit" value="sticker" />
+    </form>
+    <form enctype="multipart/form-data" method="post" name="fileinfo" action="/api/">
+      {% csrf_token %}
+      <input type="file" name="file" required />
+      <input type="hidden" name="action" value="sharefb">
+      <input type="submit" value="fb" />
     </form>
 
 {% endblock %}

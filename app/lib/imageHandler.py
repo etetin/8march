@@ -11,12 +11,17 @@ class ImageHandler:
 	def getPathToImage(self):
 		return self.path_to_image
 
+	def getUrlToImage(self):
+		return self.url_to_image
+
 	def __setPathToImage(self, filename):
-		self.path_to_image = setting.MEDIA_ROOT + '/' + filename
+		self.path_to_image = setting.MEDIA_ROOT + filename
+
+	def __setUrlToImage(self, filename):
+		self.url_to_image = setting.HOST_ADRESS + setting.MEDIA_URL + filename
 
 	def alreadyExist(self, filename):
-		print(setting.MEDIA_ROOT + filename)
-		return os.path.isfile(setting.MEDIA_ROOT + '/' + filename)
+		return os.path.isfile(setting.MEDIA_ROOT + filename)
 
 	def needToCompress(self):
 		file_size = os.path.getsize(self.path_to_image) // 1024
@@ -27,7 +32,7 @@ class ImageHandler:
 
 	# try to compress saved image
 	def compress(self):
-		image_url = setting.HOST_ADRESS + '/' + self.path_to_image
+		image_url = self.url_to_image
 		api = Client(self.KRAKEN_API_KEY, self.KRAKEN_API_SECRET)
 		data = {
 			'wait': True
@@ -64,6 +69,7 @@ class ImageHandler:
 	def save(self, image):
 		fs = FileSystemStorage()
 		self.__setPathToImage(image.name)
+		self.__setUrlToImage(image.name)
 		if not self.alreadyExist(image.name):
 			filename = fs.save(image.name, image)
 		else:
