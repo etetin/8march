@@ -1,35 +1,22 @@
 {% load staticfiles %}
 <html >
     <head>
-        <meta property="og:url"           content="http://8march.hpmd.ru" />
+        <meta property="og:url"           content="{{ host }}" />
         <meta property="og:type"          content="website" />
         <meta property="og:title"         content="Your Website Title" />
         <meta property="og:description"   content="Your description" />
-        <meta property="og:image"         content="http://8march.hpmd.ru/media/forSticker.png" />
-        <title>hpmd 8 march</title>
+        <meta property="og:image"         content="{{ host }}/media/forSticker.png" />
+        {# by click need to change content of meta above #}
         {% load static %}
     </head>
     <body class="body-root">
-        <header>
-
-        </header>
-
         {% block content %}
         {% endblock %}
         <div class="fb-share-button"
-            data-href="https://www.your-domain.com/your-page.html"
+            data-href="{{ host }}"
             data-layout="button_count">
         </div>
         <div id="fb-root"></div>
-        <script>
-            (function(d, s, id) {
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id)) return;
-                js = d.createElement(s); js.id = id;
-                js.src = 'https://connect.facebook.net/ru_RU/sdk.js#xfbml=1&version=v2.12';
-                fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));
-        </script>
     </body>
     <script>
         var getCookie = function(name) {
@@ -54,23 +41,10 @@
                     action: 'givemesticker'
                 };
 
-                var boundary = String(Math.random()).slice(2);
-                var boundaryMiddle = '--' + boundary + '\r\n';
-                var boundaryLast = '--' + boundary + '--\r\n'
-
-                var body = ['\r\n'];
-                for (var key in data) {
-                    // добавление поля
-                    body.push('Content-Disposition: form-data; name="' + key + '"\r\n\r\n' + data[key] + '\r\n');
-                }
-
-                body = body.join(boundaryMiddle) + boundaryLast;
-                var xhr = new XMLHttpRequest();
                 xhr.open('POST', '/givemesticker/', true);
 
                 var csrftoken = getCookie('csrftoken');
                 xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-                xhr.setRequestHeader('Content-Type', 'multipart/form-data; text=' + '123');
 
                 xhr.onreadystatechange = function () {
                     if (this.readyState != 4) return;
