@@ -10,7 +10,6 @@ def main(request):
 		if data['action'] == 'givemesticker':
 			image_handler = imageHandler.ImageHandler()
 			filename = image_handler.save(image=request.FILES['file'])
-			image_handler.setPathToImage(filename)
 
 			if image_handler.needToCompress():
 				status, message = image_handler.compress()
@@ -37,10 +36,9 @@ def main(request):
 				"success": True,
 				"stickerpack_url": stickerpack_url
 			}
-		if data['action'] == 'sharefb':
+		elif data['action'] == 'sharefb':
 			image_handler = imageHandler.ImageHandler()
 			filename = image_handler.save(image=request.FILES['file'])
-			image_handler.setPathToImage(filename)
 
 			response = {
 				"success": True,

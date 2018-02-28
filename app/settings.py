@@ -132,4 +132,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-HOST_ADRESS = 'http://138.68.70.255:8000'
+# HOST_ADRESS = 'http://138.68.70.255:8000'
+HOST_ADRESS = 'http://127.0.0.1:8000'

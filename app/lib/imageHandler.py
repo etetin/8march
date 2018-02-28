@@ -11,8 +11,12 @@ class ImageHandler:
 	def getPathToImage(self):
 		return self.path_to_image
 
-	def setPathToImage(self, filename):
-		self.path_to_image = 'media/' + filename
+	def __setPathToImage(self, filename):
+		self.path_to_image = setting.MEDIA_ROOT + '/' + filename
+
+	def alreadyExist(self, filename):
+		print(setting.MEDIA_ROOT + filename)
+		return os.path.isfile(setting.MEDIA_ROOT + '/' + filename)
 
 	def needToCompress(self):
 		file_size = os.path.getsize(self.path_to_image) // 1024
@@ -59,6 +63,10 @@ class ImageHandler:
 	# save image on server from request
 	def save(self, image):
 		fs = FileSystemStorage()
-		filename = fs.save(image.name, image)
+		self.__setPathToImage(image.name)
+		if not self.alreadyExist(image.name):
+			filename = fs.save(image.name, image)
+		else:
+			filename = image.name
 
 		return filename
