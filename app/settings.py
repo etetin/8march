@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+#TOOD don't run in production!
+CORS_ORIGIN_WHITELIST = ('*')
 
 # Application definition
 

@@ -9,7 +9,7 @@ class Telegram:
 	def createStikerpack(self, path_to_image, id):
 		bot = Bot(token=self.TOKEN)
 
-		name = 'hpmd' + str(id) + 'test_local' + '_by_HPMDBOT'
+		name = 'hpmd_8march' + str(id) + 'test_local' + '_by_HPMDBOT'
 		title = 'hpmd' + str(id)
 
 		with open(path_to_image, 'rb') as f:

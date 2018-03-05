@@ -37,22 +37,20 @@
 
         var giveme= {
             sticker: function () {
-                var data = {
-                    action: 'givemesticker'
-                };
+                let fData = new FormData();
+                fData.append('action', 'test' );
 
-                xhr.open('POST', '/givemesticker/', true);
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', 'http://8march.hpmd.ru/api/', true);
 
                 var csrftoken = getCookie('csrftoken');
                 xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
 
                 xhr.onreadystatechange = function () {
                     if (this.readyState != 4) return;
-
-                    console.log(this.responseText);
                 }
 
-                xhr.send(body);
+                xhr.send(fData);
             }
         }
     </script>

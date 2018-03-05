@@ -1,18 +1,21 @@
 from django.shortcuts import render
 from app import settings
 from app.lib import imageHandler
+from app.lib.models import Stickerpack
+from django.http import HttpResponse
 
 def index(request):
-    args = {
-        'host': settings.HOST_ADRESS
-    }
-    '''
     id = request.GET.get('id')
     if id != None:
-        image_handler = imageHandler.ImageHandler()
-        if image_handler.alreadyExist(id):
-            # TODO need to check file existing, now id - its filename
-            args['image_url'] = settings.HOST_ADRESS + '/media/' + id
-    '''
+        try:
+            stickerpack = Stickerpack.objects.get(id=id)
 
-    return render(request, 'index.html', args)
+            # imitate fb image extension
+            filename = str(stickerpack.id) + '.jpg'
+            if imageHandler.ImageHandler.alreadyExist(filename):
+                with open(settings.MEDIA_ROOT + filename, "rb") as f:
+                    return HttpResponse(f.read(), content_type="image/jpeg")
+        except Stickerpack.DoesNotExist:
+            print('object does not exist')
+
+    return render(request, 'index.html')

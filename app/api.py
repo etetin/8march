@@ -4,12 +4,19 @@ import json
 from app.lib import imageHandler, telegram as telegramApi
 from app.lib.models import Stickerpack
 
+#TOOD don't run in production!
+from django.views.decorators.csrf import csrf_exempt
+@csrf_exempt
 def main(request):
 	data = request.POST
-	if 'action' in data and request.method == 'POST' and request.FILES['file']:
+	if 'action' in data and request.FILES['file']:
 		if data['action'] == 'givemesticker':
+			# create uniq ID
+			stickerpack = Stickerpack()
+			stickerpack.save()
+
 			image_handler = imageHandler.ImageHandler()
-			filename = image_handler.save(image=request.FILES['file'])
+			filename = image_handler.save(image=request.FILES['file'], name=str(stickerpack.id) + '.png')
 
 			if image_handler.needToCompress():
 				status, message = image_handler.compress()
@@ -24,11 +31,6 @@ def main(request):
 
 			path_to_image = image_handler.getPathToImage()
 
-			# insert new row in DB
-			stickerpack = Stickerpack()
-			stickerpack.path_to_image = path_to_image
-			stickerpack.save()
-
 			telegram = telegramApi.Telegram()
 			stickerpack_url = telegram.createStikerpack(path_to_image=path_to_image, id=stickerpack.id)
 
@@ -37,23 +39,28 @@ def main(request):
 				"stickerpack_url": stickerpack_url
 			}
 		elif data['action'] == 'sharefb':
+			# create uniq ID
+			stickerpack = Stickerpack()
+			stickerpack.save()
+
 			image_handler = imageHandler.ImageHandler()
-			filename = image_handler.save(image=request.FILES['file'])
+			filename = image_handler.save(image=request.FILES['file'], name=str(stickerpack.id) + '.jpg')
 
 			response = {
 				"success": True,
-				"url": image_handler.getUrlToImage()
+				"url": image_handler.getUrlToImage(),
+				"filename": filename
 			}
 
 		else:
 			response = {
 				"success": False,
-				"error_message": "wrong action or file is empty"
+				"error_message": "wrong action or file is empty/file is empty"
 			}
 	else:
 		response = {
 			"success": False,
-			"error_message": "key of 'action' not exist/not post request/file is empty"
+			"error_message": "key of 'action' not exist"
 		}
 
 	return HttpResponse(json.dumps(response), content_type="application/json")
