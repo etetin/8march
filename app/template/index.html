@@ -1,20 +1,108 @@
-{% extends "base_generic.html" %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>HPMD</title>
+    
+    <meta property="og:url" content="http://8march.hpmd.ru">
+    <meta property="og:title" content="Сгенерируй мужика!">
+    <meta property="og:description" content="Найти идеал сложно, но  можно. Узнай, как выглядит твой идеальный мужчина!">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:image" content="{{facebook_image}}">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:height" content="1200">
+    <meta property="og:image:width" content="630">
 
-{% block content %}
-{% load static %}
-    <button type="button" onclick="giveme.sticker()">ABC</button>
+    {% load static %}
+    <link rel="icon" type="image/png" href="{% static "img/favicon.png" %}">
+    <link rel="stylesheet" href="{% static "css/style.css" %}">
+</head>
+<body>
+    <div id="wrapper">
+        <div class="screen bg" id="backgrounder">
+            <div></div>
+            <div></div>
+        </div>
 
-    <form enctype="multipart/form-data" method="post" name="fileinfo" action="/api/">
-      {% csrf_token %}
-      <input type="file" name="file" required />
-      <input type="hidden" name="action" value="givemesticker">
-      <input type="submit" value="sticker" />
-    </form>
-    <form enctype="multipart/form-data" method="post" name="fileinfo" action="/api/">
-      {% csrf_token %}
-      <input type="file" name="file" required />
-      <input type="hidden" name="action" value="sharefb">
-      <input type="submit" value="fb" />
-    </form>
+        <a href="http://hpmd.ru" class="logo" title="Happy Monday Family">
+            <span class="shadow"></span>
+            <span class="img"></span>
+        </a>
 
-{% endblock %}
+        <div id="enter-screen" class="screen active">            
+            <div class="container relative">
+                <div class="enter-screen-block">
+                    <div class="enter-screen-image"></div>
+                    <form id="enter-name">
+                        <input id="input-name" class="box" type="text" placeholder="Укажите имя">
+                        <button class="box" type="submit" id="input-submit" disabled="disabled">
+                            Создать идеального мужчину
+                            <span class="btn-pointer"></span>
+                        </button>
+                    </form>
+                </div>                
+            </div>            
+        </div>
+
+        <div id="generating-overlay" class="screen">
+            <!-- <button id="test-rotator-btn" type="button">run rotator</button> -->
+            <div class="container relative">
+                <div class="overlay-block" id="overlay-block">
+                    <div class="overlay-block-image"></div>
+                    <div class="overlay-block-cont">
+                        <p>Анализируем твой профиль</p>
+                        <p>Смотрим личные видеозаписи</p>
+                        <p>Оцениваем фото из Instagram</p>
+                        <p>Рассматриваем покупки с Aliexpress</p>
+                        <p>Отслеживаем геолокацию</p>
+                        <p>Генерируем идеального мужчину</p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div id="result" class="screen">
+            <div class="container relative">
+                <div class="result-block">
+                    <div class="result-title"></div>
+                    <canvas id="canvas" height="512" width="512"></canvas>
+
+                    <div class="result-share-cont">
+                        <button id="post-telegram" class="box result-share-btn tg">
+                            <span class="result-share-btn-text"></span>
+                            <span class="result-share-btn-icon"></span>
+                            <span class="result-share-btn-star"></span>
+                        </button>
+                        <span></span>
+                        <button id="facebook-share" class="box result-share-btn fb">
+                            <span class="result-share-btn-text"></span>
+                            <span class="result-share-btn-icon"></span>
+                            <span class="result-share-btn-star"></span>
+                        </button>
+                    </div>
+
+                    <button class="result-restart box" id="restart">
+                        Создать идеального мужчину
+                        <span class="btn-pointer"></span>
+                    </button>
+                </div>
+            </div>            
+        </div>
+
+        <div id="loading-overlay">
+            <div class="content">
+                <img src="{% static "img/overlay-part.png" %}" alt="Загрузка"><br>
+                <div class="spinner"></div>
+            </div>
+            
+        </div>
+    </div>
+
+    <script src="{% static "js/hpmd8march.js" %}"></script>
+    <!-- Yandex.Metrika counter --> <script type="text/javascript"> (function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter47952734 = new Ya.Metrika({ id:47952734, clickmap:true, trackLinks:true, accurateTrackBounce:true, trackHash:true }); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = "https://mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks"); </script> <noscript><div><img src="https://mc.yandex.ru/watch/47952734" style="position:absolute; left:-9999px;" alt=""></div></noscript> <!-- /Yandex.Metrika counter -->
+</body>
+</html>
