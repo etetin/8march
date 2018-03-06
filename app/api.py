@@ -2,7 +2,8 @@ from django.http import HttpResponse
 import json
 
 from app.lib import imageHandler, telegram as telegramApi
-from app.lib.models import Stickerpack
+from app.lib.models import *
+from app import settings
 
 #TOOD don't run in production!
 from django.views.decorators.csrf import csrf_exempt
@@ -40,15 +41,15 @@ def main(request):
 			}
 		elif data['action'] == 'sharefb':
 			# create uniq ID
-			stickerpack = Stickerpack()
-			stickerpack.save()
+			fbImage = FacebookImage()
+			fbImage.save()
 
 			image_handler = imageHandler.ImageHandler()
-			filename = image_handler.save(image=request.FILES['file'], name=str(stickerpack.id) + '.jpg')
+			filename = image_handler.save(image=request.FILES['file'], name=str(fbImage.id) + '.jpg')
 
 			response = {
 				"success": True,
-				"url": image_handler.getUrlToImage(),
+				"url": settings.HOST_ADRESS + '/?id=' + str(fbImage.id),
 				"filename": filename
 			}
 
