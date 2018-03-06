@@ -9,6 +9,7 @@ urlpatterns = [
     #path('admin/', admin.site.urls),
     url(r'^$', views.index, name='index'),
     url(r'^api\/$', api.main, name='main'),
+    url(r'^privacy.html\/$', views.privacy, name='main'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

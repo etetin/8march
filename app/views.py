@@ -1,21 +1,16 @@
 from django.shortcuts import render
 from app import settings
-from app.lib import imageHandler
 from app.lib.models import FacebookImage
-from django.http import HttpResponse
 
 def index(request):
+    args = {}
     id = request.GET.get('id')
-    if id != None:
-        try:
-            fbImage = FacebookImage.objects.get(id=id)
+    filename = 'fb_share_static.jpg'
+    if id != None and id.isnumeric() and FacebookImage.objects.filter(id=id).exists():
+        filename = str(id) + '.jpg'
 
-            # imitate fb image extension
-            filename = str(fbImage.id) + '.jpg'
-            if imageHandler.ImageHandler().alreadyExist(filename=filename):
-                with open(settings.MEDIA_ROOT + filename, "rb") as f:
-                    return HttpResponse(f.read(), content_type="image/jpeg")
-        except FacebookImage.DoesNotExist:
-            print('object does not exist')
+    args['image_url'] = settings.MEDIA_URL + filename
+    return render(request, 'index.html', args)
 
-    return render(request, 'index.html')
+def privacy(request):
+    return render(request, 'privacy.html')

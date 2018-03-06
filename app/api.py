@@ -50,7 +50,7 @@ def main(request):
 			response = {
 				"success": True,
 				"url": settings.HOST_ADRESS + '/?id=' + str(fbImage.id),
-				"filename": filename
+				"id": fbImage.id
 			}
 
 		else:
