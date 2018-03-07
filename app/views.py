@@ -4,13 +4,13 @@ from app.lib.models import FacebookImage
 
 def index(request):
     args = {
-        'id_param': ''
+        'img_param': ''
     }
-    id = request.GET.get('id')
-    if id != None and id.isnumeric() and FacebookImage.objects.filter(id=id).exists():
-        filename = str(id) + '.jpg'
+    img_id = request.GET.get('img')
+    if img_id != None and img_id.isnumeric() and FacebookImage.objects.filter(id=img_id).exists():
+        filename = str(img_id) + '.jpg'
         args['image_url'] = settings.MEDIA_URL + filename
-        args['id_param'] = '/?id=' + str(id)
+        args['img_param'] = '/?img=' + str(img_id)
     else:
         filename = 'fb_share_static.jpg'
         args['image_url'] = settings.STATIC_URL + 'img/' + filename
