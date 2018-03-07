@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '(40uuzj+1#7f&pg9&@dh1lsi)91v0vmpn4^-1375r368d&#_v^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -134,5 +134,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
-# HOST_ADRESS = 'http://8march.hpmd.ru'
-HOST_ADRESS = 'http://127.0.0.1:8000'
+HOST_ADRESS = 'http://8march.hpmd.ru'
+# HOST_ADRESS = 'http://127.0.0.1:8000'

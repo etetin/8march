@@ -5,9 +5,6 @@ from app.lib import imageHandler, telegram as telegramApi
 from app.lib.models import *
 from app import settings
 
-#TOOD don't run in production!
-from django.views.decorators.csrf import csrf_exempt
-@csrf_exempt
 def main(request):
 	data = request.POST
 	if 'action' in data and request.FILES['file']:
